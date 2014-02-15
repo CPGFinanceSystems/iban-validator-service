@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @EnableAutoConfiguration
 public class FinanceApi {
-
+	
     public static void main(String[] args) throws Exception {
         SpringApplication.run(FinanceApi.class, args);
-    }	
+    }	 
 }
