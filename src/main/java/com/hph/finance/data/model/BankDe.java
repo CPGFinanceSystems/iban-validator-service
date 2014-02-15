@@ -139,4 +139,8 @@ public class BankDe {
 	public void setNachfolgeBankleitzahl(String nachfolgeBankleitzahl) {
 		this.nachfolgeBankleitzahl = nachfolgeBankleitzahl;
 	}
+	
+	public String toString() {
+		return this.bankleitzahl + ":" + this.kurzbezeichnung;
+	}
 }
