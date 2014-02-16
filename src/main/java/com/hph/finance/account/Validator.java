@@ -393,7 +393,11 @@ public abstract class Validator {
 			to = tmp + 1;
 		}
 
-		return number.substring(from, to);
+		try {
+			return number.substring(from, to);
+		} catch(IndexOutOfBoundsException error) {
+			return null;
+		}
 	}
 
 	/**
