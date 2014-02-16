@@ -3,7 +3,7 @@ package com.hph.finance.resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexResource {
+public class IndexResource extends AbstractResource {
 
 	private List<String> resources = new ArrayList<String>();
 
@@ -14,7 +14,4 @@ public class IndexResource {
 	public void setResources(List<String> resources) {
 		this.resources = resources;
 	}
-
-	
-	
 }
