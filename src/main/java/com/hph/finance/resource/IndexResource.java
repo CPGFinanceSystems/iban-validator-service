@@ -3,7 +3,7 @@ package com.hph.finance.resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexResource extends AbstractResource {
+public class IndexResource {
 
 	private List<String> resources = new ArrayList<String>();
 

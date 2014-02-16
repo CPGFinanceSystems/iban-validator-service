@@ -1,6 +1,6 @@
 package com.hph.finance.resource;
 
-public class AccountResource extends AbstractResource {
+public class AccountResource {
 
 	private String iban;
 	
