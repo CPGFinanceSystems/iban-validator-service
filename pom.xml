@@ -7,7 +7,9 @@
 	<version>0.0.1</version>
 
     <properties>
-    	<java.version>7</java.version>
+       	<java.version>1.7</java.version>
+    	<jetty.version>9.1.2.v20140210</jetty.version>
+    	<servlet-api.version>3.1.0</servlet-api.version>
         <start-class>com.hph.finance.FinanceApi</start-class>
     </properties>
 
