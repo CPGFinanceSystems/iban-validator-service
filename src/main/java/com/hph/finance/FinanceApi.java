@@ -27,9 +27,9 @@ public class FinanceApi {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://192.168.0.111:3306/finance");
-        dataSource.setUsername("root");
-        dataSource.setPassword("sandbox");
+        dataSource.setUrl("jdbc:mysql://db1.sepa-ok.de/finance");
+        dataSource.setUsername("finance");
+        dataSource.setPassword("4ZGlKGxgGUa0PJLemGF7uwdxmhj2keyL");
         return dataSource;
     }
     
