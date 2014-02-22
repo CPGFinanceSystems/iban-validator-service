@@ -1,29 +1,15 @@
 package com.hph.finance.resource;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class IndexResource extends Resource {
 
-	private Resource accounts;
-	
-	private Resource banks;
+	private Resource resources;
 
-	public Resource getAccounts() {
-		return accounts;
+	public Resource getResources() {
+		return resources;
 	}
 
-	public void setAccounts(Resource accounts) {
-		this.accounts = accounts;
+	public void setResources(Resource resources) {
+		this.resources = resources;
 	}
-
-	public Resource getBanks() {
-		return banks;
-	}
-
-	public void setBanks(Resource banks) {
-		this.banks = banks;
-	}
-	
-	
 }

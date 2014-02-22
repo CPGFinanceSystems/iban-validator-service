@@ -1,14 +1,24 @@
 package com.hph.finance.resource;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@ConfigurationProperties(name="rest")
 public class ResourceCollapsed extends Resource {
-
+	
+	@JsonIgnore
+	private static String baseUrl;
+	
 	private String href;
+	
+	public static String getBaseUrl() {
+		return baseUrl;
+	}
+
+	public static void setBaseUrl(String baseUrl) {
+		ResourceCollapsed.baseUrl = baseUrl;
+	}
 
 	public String getHref() {
-		return href;
+		return baseUrl + href;
 	}
 
 	public void setHref(String href) {
