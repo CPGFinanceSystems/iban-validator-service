@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hph.finance.data.service.BankDeRepository;
+import com.hph.finance.resource.AccountResourceCollapsed;
+import com.hph.finance.resource.BankResourceCollapsed;
 import com.hph.finance.resource.IndexResource;
 import com.hph.finance.resource.IndexResources;
 import com.hph.finance.resource.Resource;
@@ -22,8 +24,8 @@ public class IndexController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public @ResponseBody Resource indexGet() {
 		
-		ResourceCollapsed accountResource = new ResourceCollapsed();
-		ResourceCollapsed bankResource = new ResourceCollapsed();
+		ResourceCollapsed accountResource = new AccountResourceCollapsed();
+		ResourceCollapsed bankResource = new BankResourceCollapsed();
 		
 		IndexResources indexResources = new IndexResources();
 		indexResources.setAccounts(accountResource);

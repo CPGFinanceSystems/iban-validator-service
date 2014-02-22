@@ -18,7 +18,14 @@ public class ResourceCollapsed extends Resource {
 	}
 
 	public String getHref() {
-		return baseUrl + href;
+		
+		RestResource restResource = this.getClass().getAnnotation(RestResource.class);
+		
+		if(restResource != null) {
+			return baseUrl + "/" + restResource.name();
+		} else {
+			return this.href;
+		}
 	}
 
 	public void setHref(String href) {

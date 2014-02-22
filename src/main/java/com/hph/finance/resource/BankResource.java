@@ -1,6 +1,7 @@
 package com.hph.finance.resource;
 
-public class BankResource {
+@RestResource(name="banks")
+public class BankResource extends Resource {
 
 	private String country;
 	

@@ -1,5 +1,6 @@
 package com.hph.finance.resource;
 
+@RestResource(name="accounts")
 public class AccountResource extends Resource {
 
 	private String iban;
