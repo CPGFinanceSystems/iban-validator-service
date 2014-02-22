@@ -1,5 +1,5 @@
 package com.hph.finance.resource;
 
-public class BankResourceCollapsed extends AbstractResourceCollapsed {
+public class BankResourceCollapsed extends ResourceCollapsed {
 
 }

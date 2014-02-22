@@ -3,15 +3,27 @@ package com.hph.finance.resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexResource {
+public class IndexResource extends Resource {
 
-	private List<String> resources = new ArrayList<String>();
+	private Resource accounts;
+	
+	private Resource banks;
 
-	public List<String> getResources() {
-		return resources;
+	public Resource getAccounts() {
+		return accounts;
 	}
 
-	public void setResources(List<String> resources) {
-		this.resources = resources;
+	public void setAccounts(Resource accounts) {
+		this.accounts = accounts;
 	}
+
+	public Resource getBanks() {
+		return banks;
+	}
+
+	public void setBanks(Resource banks) {
+		this.banks = banks;
+	}
+	
+	
 }

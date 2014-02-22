@@ -1,6 +1,9 @@
 package com.hph.finance.resource;
 
-public class AbstractResourceCollapsed extends AbstractResource {
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties(name="rest")
+public class ResourceCollapsed extends Resource {
 
 	private String href;
 

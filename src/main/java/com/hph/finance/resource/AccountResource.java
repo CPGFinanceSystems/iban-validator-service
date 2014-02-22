@@ -1,10 +1,10 @@
 package com.hph.finance.resource;
 
-public class AccountResource {
+public class AccountResource extends Resource {
 
 	private String iban;
 	
-	private AbstractResource bank;
+	private Resource bank;
 
 	public String getIban() {
 		return iban;
@@ -14,11 +14,11 @@ public class AccountResource {
 		this.iban = iban;
 	}
 
-	public AbstractResource getBank() {
+	public Resource getBank() {
 		return bank;
 	}
 
-	public void setBank(AbstractResource bank) {
+	public void setBank(Resource bank) {
 		this.bank = bank;
 	}
 }

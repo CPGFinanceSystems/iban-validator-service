@@ -1,5 +1,6 @@
 package com.hph.finance.resource;
 
-public class AbstractResource {
+
+public class Resource {
 
 }
