@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hph.finance.account.Iban;
 import com.hph.finance.account.IbanParseException;
 import com.hph.finance.resource.AccountResource;
-import com.hph.finance.resource.BankResourceCollapsed;
 
 @Controller
 public class AccountController {
 
-	@RequestMapping(value="/account/{iban}", method=RequestMethod.GET)
+	@RequestMapping(value="/accounts/iban/{iban}", method=RequestMethod.GET)
 	public @ResponseBody AccountResource indexGet(@PathVariable("iban") String iban) {
 		
 		AccountResource resource = new AccountResource();
 		
 		try {
+			
 			Iban validIban = Iban.parse(iban);
 			resource.setIban(validIban.toIbanString());
-			resource.setBank(new BankResourceCollapsed());
+			resource.setValid(true);
+			resource.setBank(null);
 			
 			return resource;
 		} catch (IbanParseException e) {
