@@ -3,11 +3,21 @@ package com.hph.finance.resource;
 @RestResource(name="banks")
 public class BankResource extends Resource {
 
+	private String bic;
+	
 	private String country;
 	
 	private String name;
 	
-	private String bic;
+	private String localId;
+
+	public String getLocalId() {
+		return localId;
+	}
+
+	public void setLocalId(String localId) {
+		this.localId = localId;
+	}
 
 	public String getCountry() {
 		return country;
