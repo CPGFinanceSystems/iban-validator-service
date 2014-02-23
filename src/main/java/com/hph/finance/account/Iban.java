@@ -13,6 +13,10 @@ public class Iban {
 
 	private static Logger logger = Logger.getLogger(Iban.class);
 	
+	private String bankId;
+	
+	private String accountId;
+	
 	private String country;
 	
 	private String bban;
@@ -136,5 +140,21 @@ public class Iban {
 
 	public void setBban(String bban) {
 		this.bban = bban;
+	}
+
+	public String getBankId() {
+		return bankId;
+	}
+
+	public void setBankId(String bankId) {
+		this.bankId = bankId;
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 }
