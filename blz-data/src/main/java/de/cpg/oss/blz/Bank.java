@@ -24,7 +24,7 @@ public class Bank implements Serializable {
     private String bic;
     private String pruefzifferBerechnungsMethode;
     @Id
-    private String datensatzNummer;
+    private int datensatzNummer;
     private String aenderungsKennzeichen;
     private String bankleitzahlLoeschung;
     private String nachfolgeBankleitzahl;

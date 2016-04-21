@@ -87,7 +87,7 @@ public class BankImporter implements ResourceLoaderAware {
                 bank.setPan(line.substring(134, 139));
                 bank.setBic(line.substring(139, 150).trim());
                 bank.setPruefzifferBerechnungsMethode(line.substring(150, 152));
-                bank.setDatensatzNummer(line.substring(152, 158).trim());
+                bank.setDatensatzNummer(Integer.valueOf(line.substring(152, 158).trim()));
                 bank.setAenderungsKennzeichen(line.substring(158, 159));
                 bank.setBankleitzahlLoeschung(line.substring(159, 160));
                 bank.setNachfolgeBankleitzahl(line.substring(160, 168));
