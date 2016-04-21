@@ -6,7 +6,7 @@ import com.hph.finance.account.Validator;
 
 public class IbanDe extends Iban {
 	
-	public static IbanDe parse(String ibanStr) throws IbanParseException {
+	public static IbanDe parse(final String ibanStr) throws IbanParseException {
 		
 		Iban iban = Iban.parse(ibanStr);
 		String bban = iban.getBban();
