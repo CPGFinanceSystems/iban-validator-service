@@ -20,6 +20,7 @@
     <modules>
         <module>blz-data</module>
         <module>blz-api</module>
+        <module>blz-validator</module>
     </modules>
 
 </project>

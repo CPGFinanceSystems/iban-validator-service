@@ -1,14 +1,11 @@
 package com.hph.finance.controller;
 
-import com.hph.finance.account.Iban;
-import com.hph.finance.account.IbanParseException;
-import com.hph.finance.account.ValidatorFactory;
-import com.hph.finance.account.iban.IbanDe;
 import com.hph.finance.resource.AccountResource;
 import com.hph.finance.resource.BankResource;
 import com.hph.finance.resource.BankResourceCollapsed;
 import de.cpg.oss.blz.Bank;
 import de.cpg.oss.blz.BankRepository;
+import de.cpg.oss.blz.iban.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,58 +13,49 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class AccountController {
 
+    private final IbanValidator ibanValidator;
+    private final BankRepository bankRepository;
+
     @Autowired
-    private BankRepository bankDeRepository;
+    public AccountController(final IbanValidator ibanValidator, final BankRepository bankRepository) {
+        this.ibanValidator = ibanValidator;
+        this.bankRepository = bankRepository;
+    }
 
     @RequestMapping(value = "/accounts/iban/{iban}", method = RequestMethod.GET)
     public
     @ResponseBody
     AccountResource indexGet(
-            @PathVariable("iban") String iban,
-            @RequestParam(defaultValue = "false") boolean expand) {
+            @PathVariable("iban") final String ibanString,
+            @RequestParam(defaultValue = "false") final boolean expand) throws IbanParseException {
 
-        AccountResource resource = new AccountResource();
+        final AccountResource resource = new AccountResource();
 
-        try {
+        final Iban iban = Iban.parse(ibanString);
+        resource.setIban(iban.toString());
+        resource.setValid(ibanValidator.validate(iban));
+        resource.setBank(null);
 
-            Iban validIban = Iban.parse(iban);
-            resource.setIban(validIban.toIbanString());
-            resource.setValid(true);
-            resource.setBank(null);
+        if (iban.getCountryCode().equals("DE")) {
+            final String bankId = IbanUtil.germanBankIdFrom(iban);
+            final Bank bank = bankRepository.findByBankleitzahl(bankId);
 
-            if (validIban.getCountry().equals("DE")) {
+            resource.setLocalId(IbanUtil.germanAccountIdFrom(iban));
 
-                IbanDe ibanDe = IbanDe.parse(validIban.toIbanString());
-                Bank bankDe = bankDeRepository.findByBankleitzahl(ibanDe.getBankId());
-
-                resource.setLocalId(ibanDe.getAccountId());
-
-                if (ValidatorFactory.factory(bankDe.getPruefzifferBerechnungsMethode())
-                        .isValid(ibanDe.getAccountId(), ibanDe.getBankId())) {
-                    resource.setVerified(true);
-                }
-
-                if (bankDe != null && !expand) {
-
-                    BankResourceCollapsed bankResource = new BankResourceCollapsed();
-                    bankResource.setBic(bankDe.getBic());
-                    resource.setBank(bankResource);
-
-                } else if (bankDe != null) {
-
-                    BankResource bankResource = new BankResource();
-                    bankResource.setBic(bankDe.getBic());
-                    bankResource.setName(bankDe.getBezeichnung());
-                    bankResource.setCountry(ibanDe.getCountry());
-                    bankResource.setLocalId(ibanDe.getBankId());
-                    resource.setBank(bankResource);
-                }
+            if (expand) {
+                final BankResource bankResource = new BankResource();
+                bankResource.setBic(bank.getBic());
+                bankResource.setName(bank.getBezeichnung());
+                bankResource.setCountry(iban.getCountryCode());
+                bankResource.setLocalId(bankId);
+                resource.setBank(bankResource);
+            } else {
+                final BankResourceCollapsed bankResource = new BankResourceCollapsed();
+                bankResource.setBic(bank.getBic());
+                resource.setBank(bankResource);
             }
-
-            return resource;
-
-        } catch (IbanParseException e) {
-            return null;
         }
+
+        return resource;
     }
 }

@@ -1,0 +1,11 @@
+package de.cpg.oss.blz.iban.validator;
+
+@ValidatorData(modulus = 10, weights = { 2, 1, 2, 1, 2, 1, 2, 1, 2 })
+public class Validator12 extends Validator {
+
+	@Override
+	protected boolean validate(PreparedAccountNumber accountNumber) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}
