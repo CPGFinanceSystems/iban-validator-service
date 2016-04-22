@@ -13,8 +13,9 @@ public class BlzValidator {
     private final BankRepository bankRepository;
 
     @Autowired
-    public BlzValidator(final BankRepository bankRepository) {
+    public BlzValidator(final BankRepository bankRepository, final BankImporter bankImporter) {
         this.bankRepository = bankRepository;
+        bankImporter.load();
     }
 
     public boolean validateBlz(final String blz) {
