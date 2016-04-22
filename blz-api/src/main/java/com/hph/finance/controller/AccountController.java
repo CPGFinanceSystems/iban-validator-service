@@ -6,8 +6,8 @@ import com.hph.finance.resource.BankResourceCollapsed;
 import de.cpg.oss.blz.Bank;
 import de.cpg.oss.blz.BankRepository;
 import de.cpg.oss.blz.BlzValidator;
-import nl.garvelink.iban.IBAN;
-import nl.garvelink.iban.IBANFields;
+import org.iban4j.CountryCode;
+import org.iban4j.Iban;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,23 +33,24 @@ public class AccountController {
 
         final AccountResource resource = new AccountResource();
 
-        final IBAN iban = IBAN.parse(ibanString);
-        resource.setIban(iban.toPlainString());
+        final Iban iban = Iban.valueOf(ibanString);
+        resource.setIban(iban.toString());
         resource.setValid(true);
         resource.setBank(null);
 
-        if ("DE".equals(iban.getCountryCode())) {
-            final String bankId = IBANFields.getBankIdentifier(iban).orElseThrow(RuntimeException::new);
+        if (CountryCode.DE.equals(iban.getCountryCode())) {
+            final String bankId = iban.getBankCode();
+            final String accountNr = iban.getAccountNumber();
             final Bank bank = bankRepository.findByBankleitzahl(bankId);
 
-            resource.setLocalId(iban.toPlainString().substring(12));
-            resource.setValid(blzValidator.validateAccountNr(bankId, resource.getLocalId()));
+            resource.setLocalId(accountNr);
+            resource.setValid(blzValidator.validateAccountNr(bankId, accountNr));
 
             if (expand) {
                 final BankResource bankResource = new BankResource();
                 bankResource.setBic(bank.getBic());
                 bankResource.setName(bank.getBezeichnung());
-                bankResource.setCountry(iban.getCountryCode());
+                bankResource.setCountry(iban.getCountryCode().getAlpha2());
                 bankResource.setLocalId(bankId);
                 resource.setBank(bankResource);
             } else {
