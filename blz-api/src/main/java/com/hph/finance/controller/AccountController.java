@@ -5,7 +5,9 @@ import com.hph.finance.resource.BankResource;
 import com.hph.finance.resource.BankResourceCollapsed;
 import de.cpg.oss.blz.Bank;
 import de.cpg.oss.blz.BankRepository;
-import de.cpg.oss.blz.iban.*;
+import de.cpg.oss.blz.BlzValidator;
+import nl.garvelink.iban.IBAN;
+import nl.garvelink.iban.IBANFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class AccountController {
 
-    private final IbanValidator ibanValidator;
+    private final BlzValidator blzValidator;
     private final BankRepository bankRepository;
 
     @Autowired
-    public AccountController(final IbanValidator ibanValidator, final BankRepository bankRepository) {
-        this.ibanValidator = ibanValidator;
+    public AccountController(final BlzValidator blzValidator, final BankRepository bankRepository) {
+        this.blzValidator = blzValidator;
         this.bankRepository = bankRepository;
     }
 
@@ -27,20 +29,21 @@ public class AccountController {
     @ResponseBody
     AccountResource indexGet(
             @PathVariable("iban") final String ibanString,
-            @RequestParam(defaultValue = "false") final boolean expand) throws IbanParseException {
+            @RequestParam(defaultValue = "false") final boolean expand) {
 
         final AccountResource resource = new AccountResource();
 
-        final Iban iban = Iban.parse(ibanString);
-        resource.setIban(iban.toString());
-        resource.setValid(ibanValidator.validate(iban));
+        final IBAN iban = IBAN.parse(ibanString);
+        resource.setIban(iban.toPlainString());
+        resource.setValid(true);
         resource.setBank(null);
 
-        if (iban.getCountryCode().equals("DE")) {
-            final String bankId = IbanUtil.germanBankIdFrom(iban);
+        if ("DE".equals(iban.getCountryCode())) {
+            final String bankId = IBANFields.getBankIdentifier(iban).orElseThrow(RuntimeException::new);
             final Bank bank = bankRepository.findByBankleitzahl(bankId);
 
-            resource.setLocalId(IbanUtil.germanAccountIdFrom(iban));
+            resource.setLocalId(iban.toPlainString().substring(12));
+            resource.setValid(blzValidator.validateAccountNr(bankId, resource.getLocalId()));
 
             if (expand) {
                 final BankResource bankResource = new BankResource();
