@@ -2,12 +2,13 @@ package de.cpg.oss.blz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Component
+@Transactional(readOnly = true)
 public class BlzValidator {
 
     private final BankRepository bankRepository;
@@ -19,12 +20,12 @@ public class BlzValidator {
     }
 
     public boolean validateBlz(final String blz) {
-        return Optional.ofNullable(bankRepository.findByBankleitzahl(blz))
-                .map(Bank::getMerkmal).filter("1"::equals).isPresent();
+        return bankRepository.findByBankleitzahl(blz)
+                .map(Bank::getMerkmal).filter("1"::equals).findFirst().isPresent();
     }
 
     public boolean validateAccountNr(final String blz, final String accountNr) {
-        final Bank bank = Optional.ofNullable(bankRepository.findByBankleitzahl(blz))
+        final Bank bank = bankRepository.findByBankleitzahl(blz).findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
                         MessageFormat.format("No bank found for BLZ {0}", blz)));
 

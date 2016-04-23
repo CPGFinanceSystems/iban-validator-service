@@ -41,7 +41,7 @@ public class AccountController {
         if (CountryCode.DE.equals(iban.getCountryCode())) {
             final String bankId = iban.getBankCode();
             final String accountNr = iban.getAccountNumber();
-            final Bank bank = bankRepository.findByBankleitzahl(bankId);
+            final Bank bank = bankRepository.findByBankleitzahl(bankId).findFirst().orElseThrow(RuntimeException::new);
 
             resource.setLocalId(accountNr);
             resource.setValid(blzValidator.validateAccountNr(bankId, accountNr));

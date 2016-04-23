@@ -66,6 +66,7 @@ public class BankImporter implements ResourceLoaderAware {
     public void load() {
 
         if (bankRepository.count() == 0) {
+            log.info("Importing bankcode file from ".concat(URL).concat("..."));
 
             final List<String> lines;
             try {
@@ -94,6 +95,7 @@ public class BankImporter implements ResourceLoaderAware {
 
                 bankRepository.save(bank);
             });
+            log.info("Imported {} entries", bankRepository.count());
         }
     }
 

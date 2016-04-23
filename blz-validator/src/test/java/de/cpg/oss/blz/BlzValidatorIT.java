@@ -25,6 +25,6 @@ public class BlzValidatorIT {
 
     @Test
     public void testValidateAccountNr() {
-        assertFalse(blzValidator.validateAccountNr("70010080", "23923412"));
+        assertFalse(blzValidator.validateAccountNr("55010111", "0026639119"));
     }
 }
