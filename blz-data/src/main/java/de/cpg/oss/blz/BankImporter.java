@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class BankImporter implements ResourceLoaderAware {
 
-    private final static String URL = "http://www.bundesbank.de/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/2018_06_03/blz_2018_03_05_txt.txt?__blob=publicationFile";
+    private final static String URL = "https://www.bundesbank.de/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/2018_06_03/blz_2018_03_05_txt.txt?__blob=publicationFile";
 
     private ResourceLoader resourceLoader;
 
